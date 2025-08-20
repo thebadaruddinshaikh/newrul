@@ -4,7 +4,6 @@ fn main() {
     println!("Hello, world!");
 }
 
-
 struct Neuron {
     weights: Vec<f32>,
     bias: f32,
@@ -28,5 +27,21 @@ impl Neuron {
         out
     }
 
+}
+
+struct Layer {
+    neurons: Vec<Neuron>,
+}
+
+
+impl Layer {
+    fn new(nin: usize, nout: usize) -> Self {
+        let neurons = (0..nout).map(|_| Neuron::new(nin)).collect();
+        Self { neurons }
+    }
+
+    fn activate(&self, input: &[f32]) -> Vec<f32> {
+        self.neurons.iter().map(|n| n.activate(input)).collect()
+    }
 }
 
