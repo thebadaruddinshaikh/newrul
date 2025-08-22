@@ -1,7 +1,20 @@
 use rand::Rng;
 
 fn main() {
-    println!("Hello, world!");
+    let insize: usize = 20;
+    let mut rng = rand::thread_rng();
+
+    let input: Vec<f32> = (0..20).map(|_| rng.gen_range(0.0..=1.0)).collect();
+    let layer1 = Layer::new(20, 10);
+    let layer2 = Layer::new(10, 5);
+    let layer3 = Layer::new(5, 1);
+
+    let input1 = layer1.activate(&input);
+    let input2 = layer2.activate(&input1);
+    let output = layer3.activate(&input2);
+    
+    println!("{:#?}", output);
+
 }
 
 struct Neuron {
