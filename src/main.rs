@@ -1,7 +1,7 @@
 use rand::Rng;
+use std::ops::{Add, Mul, Sub, Div};
 
 fn main() {
-    let insize: usize = 20;
     let mut rng = rand::thread_rng();
 
     let input: Vec<f32> = (0..20).map(|_| rng.gen_range(0.0..=1.0)).collect();
@@ -58,3 +58,63 @@ impl Layer {
     }
 }
 
+struct Value{
+    data: f32,
+    grad: f32,
+}
+
+impl Value {
+    fn new(data: f32) -> Self {
+        Self { data, grad: 0.0 }
+    }
+}
+
+impl Add for Value {
+    type Output = Self;
+
+    fn add(self, other: Self) -> Self {
+        Value::new(self.data + other.data)
+    }
+}
+
+impl Sub for Value {
+    type Output = Self;
+
+    fn sub(self, other: Self) -> Self {
+        Value::new(self.data - other.data)
+    }
+}
+
+impl Mul for Value {
+    type Output = Self;
+
+    fn mul(self, other: Self) -> Self {
+        Value::new(self.data * other.data)
+    }
+}
+
+impl Div for Value {
+    type Output = Self;
+
+    fn div(self, other: Self) -> Self {
+        Value::new(self.data / other.data)
+    }
+}
+
+// struct NN {
+//     layers: Vec<Layer>,
+// }
+
+// impl NN {
+//     fn new() -> Self {
+//         Self { layers: Vec::new() }
+//     }
+
+//     fn sequential(layers: Vec<Layer>) -> Self {
+//         Self { layers }
+//     }
+
+//     fn linear(&self, nin: u32, nout: u32) -> Self {
+//         Self { layers: vec![Layer::new(nin as usize, nout as usize)] }
+//     }
+// }   
